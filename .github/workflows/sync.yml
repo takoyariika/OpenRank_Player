@@ -1,0 +1,39 @@
+name: OpenRank - sync matches
+on:
+  issues:
+    types: [opened, edited, reopened]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */2 * * *'
+permissions:
+  contents: write
+  issues: read
+concurrency:
+  group: openrank-player-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    if: github.event_name != 'issues' || github.event.issue.user.login == github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Synchronize confirmed matches
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/sync.py
+      - name: Commit data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add manifest.json data/matches.json data/pending.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: sync OpenRank results'
+            git push
+          fi
+      - name: Show Pages URL and setup steps
+        run: python scripts/pages_help.py

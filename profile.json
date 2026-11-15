@@ -1,0 +1,7 @@
+{
+  "display_name": "",
+  "games": [
+    {"id": "kof98um", "name": "KOF '98 UM", "genre": "fighting"},
+    {"id": "puyopuyo", "name": "ぷよぷよ", "genre": "puzzle"}
+  ]
+}

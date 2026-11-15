@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark"><title>OpenRank | プレイヤー</title>
+<link rel="stylesheet" href="style.css"><script src="app.js" defer></script><script src="pages.js" defer></script>
+<style>
+.pages-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.pages-row input{flex:1 1 280px}.pages-info{font-size:12px;line-height:1.7;color:var(--muted);margin:12px 0 0}.pages-links{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}.pages-row .button:disabled{opacity:.5;cursor:not-allowed}
+</style>
+</head>
+<body>
+<header class="top"><a class="logo" href="./"><span class="logo-mark">◈</span> OPEN<span>RANK</span></a><a class="small-link" id="github-link" href="#">GitHub ↗</a></header>
+<main class="container">
+ <div class="eyebrow">PLAYER RECORD / DISTRIBUTED RATING</div>
+ <div class="hero"><div><h1 id="display-name">プレイヤーの戦績</h1><p id="owner-line" class="muted">manifest.jsonを読み込んでいます</p></div><div class="hero-badge"><span id="total-matches">0</span><small>CONFIRMED MATCHES</small></div></div>
+ <div id="notice" class="notice hidden" role="status"></div>
+ <section class="panel" id="pages-panel"><div class="section-heading"><h2>自分の戦績ページのURL</h2><span class="hint">共有用のリンクをコピー</span></div>
+  <div class="pages-row"><input id="pages-url" aria-label="戦績ページURL" readonly placeholder="初期化すると表示されます"><button id="copy-pages-url" type="button" class="button primary" disabled>URLをコピー</button></div>
+  <div class="pages-links"><a id="visit-pages-url" class="small-link hidden" href="./" target="_blank" rel="noopener noreferrer">戦績ページを開く ↗</a><a id="pages-settings-link" class="small-link hidden" href="#" target="_blank" rel="noopener noreferrer">Pagesの設定 ↗</a></div>
+  <p id="pages-setup-status" class="pages-info" role="status">最初に Actions → OpenRank - sync matches を実行して初期化してください。</p>
+  <p class="pages-info">404の場合はGitHubの <b>Settings → Pages</b> で <b>Deploy from a branch / main / (root)</b> を選んでSave。公開後にアクセスできるようになります。</p></section>
+ <section class="panel"><div class="section-heading"><h2>ゲーム別レーティング</h2><span class="hint">データは各自のGitHubに保存</span></div><div id="game-grid" class="game-grid"><p class="muted">読み込み中...</p></div></section>
+ <section class="panel" id="report-panel"><div class="section-heading"><h2>試合結果を報告する</h2><span class="hint">両者が自分のIssueを作成</span></div>
+  <p class="subtle">最初に試合を行い、同じ試合IDと結果を双方が提出する。相手の承認が揃った時点で確定します。</p>
+  <form id="report-form" class="form-grid">
+    <label>自分の戦績リポジトリ <input id="self-repo" autocomplete="off" placeholder="username/ranked-data" required></label>
+    <label>対戦相手のリポジトリ <input id="other-repo" autocomplete="off" placeholder="opponent/ranked-data" required></label>
+    <label>ゲームID <input id="game-id" autocomplete="off" placeholder="kof98um" pattern="[a-z0-9][a-z0-9-]*" required></label>
+    <label>対戦日 <input id="played-at" type="date" required></label>
+    <label>勝者 <select id="winner"><option value="self">自分</option><option value="other">対戦相手</option></select></label>
+    <div class="form-action"><button type="submit" class="button primary">試合IDと申告リンクを作成</button></div>
+  </form>
+  <div id="report-error" class="error hidden" role="alert"></div>
+  <div id="report-output" class="result hidden">
+    <h3 id="report-output-title">申告リンクを発行しました</h3><p class="subtle">① 自分のIssueを作成して送信 ② 招待リンクを相手に渡し、相手も同じ試合を申告</p>
+    <div id="match-preview" class="match-preview" role="status"></div>
+    <div class="actions"><a class="button primary" id="own-issue" target="_blank" rel="noopener noreferrer">自分のIssueを作成 ↗</a><button class="button" type="button" id="copy-invite">招待URLをコピー</button></div>
+    <label>対戦相手へ送るURL <input readonly id="invite-url" aria-label="招待URL"></label>
+    <p class="hint">Issue投稿後はGitHub Actionsが自動確認します。未確定の場合は相手の投稿後に「Sync matches」を実行するか定期同期を待ってください。</p>
+  </div>
+ </section>
+ <section class="panel"><div class="section-heading"><h2>承認済みの対戦履歴</h2><a class="small-link" id="match-json" href="data/matches.json">JSON ↗</a></div><div id="matches"><p class="muted">データを読み込んでいます...</p></div></section>
+ <footer>OPENRANK / 無料・GitHub Pages対応。本人の申告と相互照合に基づく記録で、不正防止を保証するものではありません。</footer>
+</main>
+</body></html>
