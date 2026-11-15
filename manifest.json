@@ -1,10 +1,29 @@
 {
   "protocol": "openrank/1",
   "type": "player",
-  "repository": "",
-  "display_name": "未設定",
-  "page_url": "",
-  "games": {},
+  "repository": "takoyariika/OpenRank_Player",
+  "display_name": "takoyariika",
+  "page_url": "https://takoyariika.github.io/OpenRank_Player/",
+  "games": {
+    "kof98um": {
+      "name": "KOF '98 UM",
+      "genre": "fighting",
+      "rp": 1500,
+      "wins": 0,
+      "losses": 0,
+      "matches": 0,
+      "win_rate": 0
+    },
+    "puyopuyo": {
+      "name": "ぷよぷよ",
+      "genre": "puzzle",
+      "rp": 1500,
+      "wins": 0,
+      "losses": 0,
+      "matches": 0,
+      "win_rate": 0
+    }
+  },
   "updated_at": "",
   "confirmed_count": 0
 }
